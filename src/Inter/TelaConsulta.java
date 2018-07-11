@@ -24,12 +24,9 @@ import javax.swing.JOptionPane;
  */
 public class TelaConsulta extends javax.swing.JInternalFrame {
 
-     
-    
-    
     /**
-     * 
-     * 
+     *
+     *
      * Creates new form Consulta
      */
     public TelaConsulta() {
@@ -173,51 +170,50 @@ public class TelaConsulta extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void VerificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VerificarActionPerformed
-       txtArea.setText("");
-       txtArea.append("Consultas marcadas: \n");
-       txtArea.append("Data  Horário  Duração\n");
-        int i; 
-        for(i = 0; i< s1.getListaConsultas().size(); i++){
+        txtArea.setText("");
+        txtArea.append("Consultas marcadas: \n");
+        txtArea.append("Data  Horário  Duração\n");
+        int i;
+        for (i = 0; i < s1.getListaConsultas().size(); i++) {
             txtArea.append(s1.getListaConsultas().get(i).getData() + "  " + s1.getListaConsultas().get(i).getHorário() + "  " + s1.getListaConsultas().get(i).getDuração() + "\n");
         }
-    
-        
-        
+
+
     }//GEN-LAST:event_VerificarActionPerformed
 
     private void SlavarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SlavarActionPerformed
 
-           String cpf = txtCPF.getText();
-           String data = txtData.getText();
-           String duração = jTextDuração.getText();
-           String horário = txtHora.getText();
-           
-           int i, aux = 0;
-           for(i =0; i< s1.getCadastro().size(); i++){
-               if(s1.getCadastro().get(i).getCpf().equals(cpf)){
-                   Paciente p = s1.getCadastro().get(i);
-                   if(!data.equals("") && !duração.equals("") && !horário.equals("")){
-                   Consulta c1 = new Consulta(data, horário, duração, p);
-                   
-                   s1.AdicionarConsultas(c1);
-                   aux = 1;
-                   JOptionPane.showMessageDialog(null, "Consulta marcada");
-                   break;
-                   }
-                   else{
-                       JOptionPane.showMessageDialog(null, "Informações insuficientes");
-                   }
-               }
-           }
-           if(aux == 0){
-               txtArea.append("CPF não cadastrado, realize o cadastro do paciente antes de prosseguir" + "\n\n");
-           }
+        String cpf = txtCPF.getText();
+        String data = txtData.getText();
+        String duração = jTextDuração.getText();
+        String horário = txtHora.getText();
 
-           
-           
+        int i, aux = 0;
+        for (i = 0; i < s1.getCadastro().size(); i++) {
+            if (s1.getCadastro().get(i).getCpf().equals(cpf)) {
+                Paciente p = s1.getCadastro().get(i);
+                if (!data.equals("") && !duração.equals("") && !horário.equals("")) {
+                    Consulta c1 = new Consulta(data, horário, duração, p);
+                    if (s1.VerificarDisponibilidadeConsulta(c1) == true) {
+                        s1.AdicionarConsultas(c1);
+                        aux = 1;
+                        JOptionPane.showMessageDialog(null, "Consulta marcada");
+                        break;
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Já existe uma consulta marcada nesse horário\nUtilize o botão 'Verificar' para visualizar as consultas já marcadas");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Informações insuficientes");
+                }
+            }
+        }
+        if (aux == 0) {
+            txtArea.append("CPF não cadastrado, realize o cadastro do paciente antes de prosseguir" + "\n\n");
+        }
+
+
     }//GEN-LAST:event_SlavarActionPerformed
 
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Slavar;

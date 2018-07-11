@@ -53,24 +53,18 @@ public class Sistema {
         }
     }
 
-    public boolean VerificarDisponibilidadeConsulta(Consulta c1, String horário) {
-        int i, hora, duração, horaNova, aux = 0;
+    public boolean VerificarDisponibilidadeConsulta(Consulta c1) {
+        int i, aux =0;
         for (i = 0; i < listaConsultas.size(); i++) {
-            hora = Integer.parseInt(listaConsultas.get(i).getHorário());
-            duração = Integer.parseInt(listaConsultas.get(i).getDuração());
-            horaNova = Integer.parseInt(horário);
-            if (hora + duração <= horaNova) {
+            if(listaConsultas.get(i).getData().equals(c1.getData()) && listaConsultas.get(i).getHorário().equals(c1.getHorário())){
                 aux = 1;
-            } else {
-                aux = 0;
+                return false;
             }
         }
-        if (aux == 1) {
+        if(aux == 0){
             return true;
-        } else {
-            return false;
         }
-
+      return false;
     }
 
     public ArrayList<Consulta> getListaConsultas() {
